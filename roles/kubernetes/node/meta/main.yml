@@ -1,0 +1,29 @@
+---
+dependencies:
+  - role: download
+    file: "{{ downloads.hyperkube }}"
+  - role: download
+    file: "{{ downloads.pod_infra }}"
+  - role: kubernetes/secrets
+  - role: download
+    file: "{{ downloads.nginx }}"
+  - role: download
+    file: "{{ downloads.testbox }}"
+  - role: download
+    file: "{{ downloads.netcheck_server }}"
+    when: deploy_netchecker
+  - role: download
+    file: "{{ downloads.netcheck_agent }}"
+    when: deploy_netchecker
+  - role: download
+    file: "{{ downloads.netcheck_kubectl }}"
+    when: deploy_netchecker
+  - role: download
+    file: "{{ downloads.kubednsmasq }}"
+    when: not skip_dnsmasq_k8s|default(false)
+  - role: download
+    file: "{{ downloads.kubedns }}"
+    when: not skip_dnsmasq_k8s|default(false)
+  - role: download
+    file: "{{ downloads.exechealthz }}"
+    when: not skip_dnsmasq_k8s|default(false)

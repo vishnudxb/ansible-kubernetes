@@ -1,0 +1,46 @@
+---
+- hosts: all
+  gather_facts: true
+  become: yes
+  become_user: root
+
+- hosts: all
+  become: yes
+  become_user: root
+  roles:
+    - { role: kubernetes/preinstall, tags: preinstall }
+
+- hosts: etcd:!k8s-cluster
+  become: yes
+  become_user: root
+  roles:
+    - { role: etcd, tags: etcd }
+
+- hosts: k8s-cluster
+  become: yes
+  become_user: root
+  roles:
+    - { role: etcd, tags: etcd }
+    - { role: kubernetes/node, tags: node }
+    - { role: network_plugin, tags: network }
+
+- hosts: kube-master
+  become: yes
+  become_user: root
+  roles:
+    - { role: kubernetes/master, tags: master }
+    - { role: kubernetes-apps/lib, tags: apps }
+    - { role: kubernetes-apps/network_plugin, tags: network }
+
+- hosts: k8s-cluster
+  become: yes
+  become_user: root
+  roles:
+    - { role: dnsmasq, tags: dnsmasq }
+
+- hosts: kube-master[0]
+  become: yes
+  become_user: root
+  roles:
+    - { role: kubernetes-apps/lib, tags: apps }
+    - { role: kubernetes-apps, tags: apps }

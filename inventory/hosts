@@ -1,0 +1,16 @@
+[kube-master]
+<master ipaddress>
+
+[etcd]
+<etcd ip address>
+
+[kube-node]
+<node1 ipaddress>
+<node2 ipaddress>
+<node3 ipaddress>
+
+
+[k8s-cluster]
+kube-master
+etcd
+kube-node

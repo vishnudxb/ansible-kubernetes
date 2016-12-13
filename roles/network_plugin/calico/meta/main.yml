@@ -1,0 +1,10 @@
+---
+dependencies:
+  - role: download
+    file: "{{ downloads.calico_cni }}"
+  - role: download
+    file: "{{ downloads.calico_node }}"
+  - role: download
+    file: "{{ downloads.calicoctl }}"
+  - role: download
+    file: "{{ downloads.hyperkube }}"
